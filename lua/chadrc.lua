@@ -96,7 +96,7 @@ M.nvdash = {
     "MM        MM   MM' \"'   MM 6W'   `Wb MM    MM MM.  M'   MM    MM    MM    MM  ",
     "MM.      ,MP   MM       MM 8M     M8 MM    MM `MM A'    MM    MM    MM    MM  ",
     "`Mb.    ,dP'   MM       MM YA.   ,A9 MM    MM  :MM;     MM    MM    MM    MM  ",
-    "  `\"bmmd\"'   .JMML.   .JMML.`Ybmd9'.JMML  JMML. VF    .JMML..JMML  JMML  JMML.",
+    " `\"bmmd\"'   .JMML.   .JMML.`Ybmd9'.JMML  JMML. VF    .JMML..JMML  JMML  JMML",
     "",
     " Powered by  eovim",
     "",
