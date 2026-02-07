@@ -4,6 +4,7 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+map("n", "<C-f>", "/", { desc = "Find in document" })
 
 -- Easy exit from terminal mode
 map("t", "<esc><esc>", "<c-\\><c-n>")
