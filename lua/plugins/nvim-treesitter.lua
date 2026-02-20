@@ -50,7 +50,6 @@ return {
     end
 
     local function apply_hypr_colors()
-      print "Executing apply_hypr_colors"
       local border_color = get_hypr_border_color() or "#FFFFFF"
 
       vim.api.nvim_set_hl(0, "FloatBorder", { fg = border_color, bg = "NONE" })
