@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Change tab from spaces to actual tab for text files
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = { "text", "conf", "" },
+	pattern = { "text", "conf", "markdown", "" },
 	callback = function()
 		vim.opt.expandtab = false
 		vim.opt.tabstop = 4

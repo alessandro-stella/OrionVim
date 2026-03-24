@@ -24,7 +24,6 @@ function M.setup()
 		vim.api.nvim_set_hl(0, "DiagnosticVirtualText" .. suffix, { fg = color, bg = "NONE" })
 		vim.api.nvim_set_hl(0, "DiagnosticSign" .. suffix, { fg = color, bg = "NONE" })
 		vim.api.nvim_set_hl(0, "DiagnosticFloating" .. suffix, { fg = color, bg = "NONE" })
-
 		vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. suffix, { sp = color, underline = true })
 	end
 end

@@ -16,15 +16,20 @@ map("n", "<Tab>", "<cmd>bnext<CR>", { silent = true })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { silent = true })
 
 -- Close buffer
-map("n", "<leader>x", function()
+vim.keymap.set("n", "<leader>x", function()
 	local bufnr = vim.api.nvim_get_current_buf()
+	local winnr = vim.api.nvim_get_current_win()
 
 	if vim.bo[bufnr].filetype == "dashboard" or vim.bo[bufnr].filetype == "NvimTree" then
 		return
 	end
 
 	require("bufdelete").bufdelete(bufnr, false)
-end, { desc = "Close buffer" })
+
+	if vim.api.nvim_win_is_valid(winnr) then
+		vim.api.nvim_win_close(winnr, true)
+	end
+end, { desc = "Close buffer and window" })
 
 -- Open side bar
 map("n", "<C-n>", "", { noremap = true })

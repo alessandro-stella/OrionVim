@@ -89,7 +89,7 @@ local function my_tabline()
 
 	if nvim_tree_width > 0 then
 		local root_name = "   " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. " "
-		s = s .. "%#WinSeparator#▕%#NvimTreeNormal#" .. root_name
+		s = s .. "%#WinSeparator#│%#NvimTreeNormal#" .. root_name
 		local padding = nvim_tree_width - vim.fn.strdisplaywidth(root_name)
 		if padding > 0 then
 			s = s .. string.rep(" ", padding)

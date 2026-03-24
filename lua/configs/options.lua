@@ -1,8 +1,11 @@
 local o = vim.o
 local opt = vim.opt
 
--- Disable mode text (already in lualine)
+-- Disable mode text at bottom left (already in lualine)
 opt.showmode = false
+
+-- Disable aumenu on right click
+opt.mousemodel = "extend"
 
 -- Disable visual line wrapping to prevent lines from breaking prematurely
 o.wrap = false
@@ -44,7 +47,7 @@ opt.softtabstop = 2
 opt.signcolumn = "yes"
 
 -- Remove "~" under numbers
-opt.fillchars = { eob = " ", vert = "▕" }
+opt.fillchars = { eob = " " }
 
 -- Disable automatic line breaks when typing beyond a certain width
 opt.textwidth = 0
