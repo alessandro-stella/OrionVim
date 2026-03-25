@@ -1,32 +1,3 @@
--- Show dashboard on last buffer close
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		local stats = vim.v.vim_did_enter
-		if stats == 0 then
-			return
-		end
-
-		if vim.api.nvim_buf_get_name(0) == "" and vim.bo.filetype == "" then
-			vim.schedule(function()
-				pcall(function()
-					vim.cmd("Dashboard")
-				end)
-			end)
-		end
-	end,
-})
-
--- Highlight yanked lines
-vim.api.nvim_create_autocmd("TextYankPost", {
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = "IncSearch",
-			timeout = 150,
-		})
-	end,
-})
-
 -- Configure jdtls for java projects
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "java",
@@ -61,7 +32,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>la", vim.lsp.buf.code_action, "Code Action")
 		map("<leader>lr", vim.lsp.buf.rename, "Rename all references")
 		map("<leader>lf", vim.lsp.buf.format, "Format")
-		map("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
+		map("<leader>V", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
 
 		local function client_supports_method(client, method, bufnr)
 			if vim.fn.has("nvim-0.11") == 1 then
@@ -97,5 +68,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				end,
 			})
 		end
+	end,
+})
+
+-- Highlight yanked lines
+vim.api.nvim_create_autocmd("TextYankPost", {
+	pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({
+			higroup = "IncSearch",
+			timeout = 150,
+		})
 	end,
 })

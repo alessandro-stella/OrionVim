@@ -15,22 +15,6 @@ map("n", "<Tab>", "<cmd>bnext<CR>", { silent = true })
 -- SHIFT+TAB previous buffer
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { silent = true })
 
--- Close buffer
-vim.keymap.set("n", "<leader>x", function()
-	local bufnr = vim.api.nvim_get_current_buf()
-	local winnr = vim.api.nvim_get_current_win()
-
-	if vim.bo[bufnr].filetype == "dashboard" or vim.bo[bufnr].filetype == "NvimTree" then
-		return
-	end
-
-	require("bufdelete").bufdelete(bufnr, false)
-
-	if vim.api.nvim_win_is_valid(winnr) then
-		vim.api.nvim_win_close(winnr, true)
-	end
-end, { desc = "Close buffer and window" })
-
 -- Open side bar
 map("n", "<C-n>", "", { noremap = true })
 
@@ -70,3 +54,67 @@ map("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- Rename variable/function (uses LSP)
 map("n", "<leader>ra", "<cmd>Lspsaga rename<CR>", { desc = "Rename variable" })
+
+-- Remap copy and paste to use global clipboard
+map("n", "y", '"+y')
+map("n", "yy", '"+yy')
+map("n", "Y", '"+Y')
+map("x", "y", '"+y')
+map("x", "Y", '"+Y')
+
+-- Remove search highlighting
+map("n", "<Esc>", ":nohlsearch<CR><Esc>", { noremap = true, silent = true })
+
+-- ================================================
+-- =============  Close buffer logic  =============
+-- ================================================
+
+-- Helper: count listed normal buffers (excluding nvim-tree)
+local function count_buffers()
+	local count = 0
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.bo[buf].buflisted and vim.bo[buf].filetype ~= "NvimTree" then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+-- Close buffer and window
+vim.keymap.set("n", "<leader>x", function()
+	if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "dashboard" then
+		return
+	end
+
+	vim.cmd("Bdelete")
+	-- vim.cmd("q")
+end, { noremap = true, silent = true, desc = "Close buffer and window" })
+
+-- Vertical split if at least 2 normal buffers
+vim.keymap.set("n", "<leader>v", function()
+	if vim.bo.filetype == "NvimTree" then
+		return
+	end
+
+	if count_buffers() < 2 then
+		print("Not enough buffers to open a vertical split")
+		return
+	end
+
+	vim.cmd("vsplit")
+end, { noremap = true, silent = true, desc = "Split window vertically" })
+
+-- Horizontal split if at least 2 normal buffers
+vim.keymap.set("n", "<leader>h", function()
+	if vim.bo.filetype == "NvimTree" then
+		return
+	end
+
+	if count_buffers() < 2 then
+		print("Not enough buffers to open a horizontal split")
+		return
+	end
+
+	vim.cmd("split")
+end, { noremap = true, silent = true, desc = "Split window horizontally" })

@@ -1,4 +1,4 @@
-local function my_tabline()
+local function tabline()
 	local s = ""
 	local bufs = vim.fn.getbufinfo({ buflisted = 1 })
 	local current = vim.api.nvim_get_current_buf()
@@ -103,7 +103,7 @@ _G.switch_buffer = function(bufnr, _, _, _)
 	vim.api.nvim_set_current_buf(bufnr)
 end
 
-_G.render_tabline = my_tabline
+_G.render_tabline = tabline
 vim.opt.tabline = "%!v:lua.render_tabline()"
 vim.opt.mouse = "a"
 

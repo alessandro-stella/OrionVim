@@ -9,6 +9,13 @@ return {
 		version = "*",
 		config = function()
 			require("blink.cmp").setup({
+				enabled = function()
+					-- Disable for Lspsaga rename
+					if vim.bo.filetype == "sagarename" then
+						return false
+					end
+					return true
+				end,
 				signature = {
 					enabled = true,
 					window = {
