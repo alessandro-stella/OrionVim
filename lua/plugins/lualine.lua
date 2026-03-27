@@ -26,7 +26,6 @@ return {
 			return "  " .. table.concat(client_names, ", ")
 		end
 
-		-- --- NUOVA FUNZIONE PER IL NOME FILE TRONCATO ---
 		local function custom_filename()
 			local full_name = vim.fn.expand("%:t")
 			if full_name == "" then
@@ -39,18 +38,16 @@ return {
 				local stem = vim.fn.fnamemodify(full_name, ":r")
 
 				if extension ~= "" then
-					-- Sottraiamo la lunghezza dell'estensione, il punto e l'ellipsis (…)
 					local allowed_stem_len = max_len - #extension - 2
 					if allowed_stem_len > 0 then
 						return string.sub(stem, 1, allowed_stem_len) .. "…" .. "." .. extension
 					end
 				end
-				-- Se non ha estensione o è troppo corto per il calcolo sopra
+
 				return string.sub(full_name, 1, max_len - 1) .. "…"
 			end
 			return full_name
 		end
-		-- -----------------------------------------------
 
 		require("lualine").setup({
 			options = {
@@ -63,7 +60,6 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = {
-					-- Usiamo la nostra funzione con le icone abilitate
 					{ custom_filename, file_status = true, icons_enabled = true },
 					{ get_permissions, color = { fg = "#a6adc8" } },
 				},

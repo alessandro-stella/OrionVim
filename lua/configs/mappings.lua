@@ -83,13 +83,15 @@ end
 
 -- Close buffer and window
 vim.keymap.set("n", "<leader>x", function()
-	if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "dashboard" then
-		return
-	end
+	local open_buffers = count_buffers()
 
 	vim.cmd("Bdelete")
-	-- vim.cmd("q")
-end, { noremap = true, silent = true, desc = "Close buffer and window" })
+
+	if open_buffers == 1 then
+		vim.cmd("only")
+		vim.cmd("Dashboard")
+	end
+end, { noremap = true, silent = true, desc = "Close buffer and normalize layout" })
 
 -- Vertical split if at least 2 normal buffers
 vim.keymap.set("n", "<leader>v", function()
