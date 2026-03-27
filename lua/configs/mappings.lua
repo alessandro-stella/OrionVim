@@ -90,6 +90,8 @@ vim.keymap.set("n", "<leader>x", function()
 	if open_buffers == 1 then
 		vim.cmd("only")
 		vim.cmd("Dashboard")
+	else
+		vim.cmd("q")
 	end
 end, { noremap = true, silent = true, desc = "Close buffer and normalize layout" })
 
