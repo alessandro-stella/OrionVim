@@ -5,7 +5,7 @@ return {
 		local logo = [[
  .g8\"\"8q.             db                 `7MMF'   `7MF'db                   
 .dP'    `YM.                                 `MA     ,V                       
-dM'      `MM `7Mb,od8 `7MM  ,pW\"Wq.`7MMpMMMb.VM:   ,V `7MM  `7MMpMMMb.pMMMb. 
+dM'      `MM `7Mb,od8 `7MM  ,pW\"Wq.`7MMpMMMb VM:   ,V `7MM  `7MMpMMMb.pMMMb. 
 MM        MM   MM' \"'  MM 6W'   `Wb MM    MM  MM.  M'   MM    MM    MM    MM 
 MM.      ,MP   MM       MM 8M     M8 MM    MM  `MM A'    MM    MM    MM    MM 
 `Mb.    ,dP'   MM       MM YA.   ,A9 MM    MM   :MM;     MM    MM    MM    MM 
