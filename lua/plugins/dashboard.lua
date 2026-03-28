@@ -1,3 +1,19 @@
+local function center_pad(logo_lines, center_items, footer_lines)
+	local total_height = vim.o.lines
+
+	local content_height = #logo_lines + #center_items + footer_lines + 4 -- extra margin
+
+	local padding = math.floor((total_height - content_height) / 2)
+
+	if padding < 0 then
+		padding = 0
+	else
+		padding = padding - 1 -- improves visual balance
+	end
+
+	return string.rep("\n", padding)
+end
+
 return {
 	"nvimdev/dashboard-nvim",
 	lazy = false,
@@ -14,24 +30,21 @@ MM.      ,MP   MM       MM 8M     M8 MM    MM  `MM A'    MM    MM    MM    MM
                               Powered by  eovim                             
 ]]
 
-		logo = string.rep("\n", 7) .. logo .. "\n"
-
 		local opts = {
 			theme = "doom",
 			hide = {
 				statusline = false,
 			},
 			config = {
-				header = vim.split(logo, "\n"),
-        -- stylua: ignore
-        center = {
-          { action = 'Telescope find_files', desc = " Find File",     icon = " ", key = "f" },
-          { action = "ene | startinsert",    desc = " New File",      icon = " ", key = "n" },
-          { action = 'Telescope oldfiles',   desc = " Recent Files",  icon = " ", key = "r" },
-          { action = 'Telescope live_grep',  desc = " Find Text",     icon = " ", key = "g" },
-          { action = "Lazy",                 desc = " Lazy",          icon = "󰒲 ", key = "l" },
-          { action = "qa",                   desc = " Quit",          icon = " ", key = "q" },
-        },
+        		-- stylua: ignore
+        		center = {
+        			{ action = 'Telescope find_files', desc = " Find File",     icon = " ", key = "f" },
+        			{ action = "ene | startinsert",    desc = " New File",      icon = " ", key = "n" },
+        			{ action = 'Telescope oldfiles',   desc = " Recent Files",  icon = " ", key = "r" },
+        			{ action = 'Telescope live_grep',  desc = " Find Text",     icon = " ", key = "g" },
+        			{ action = "Lazy",                 desc = " Lazy",          icon = "󰒲 ", key = "l" },
+        			{ action = "qa",                   desc = " Quit",          icon = " ", key = "q" },
+        		},
 				footer = function()
 					local stats = require("lazy").stats()
 					local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -39,6 +52,17 @@ MM.      ,MP   MM       MM 8M     M8 MM    MM  `MM A'    MM    MM    MM    MM
 				end,
 			},
 		}
+
+		local logo_lines = vim.split(logo, "\n")
+
+		local pad = center_pad(
+			logo_lines,
+			opts.config.center,
+			1 -- footer
+		)
+
+		logo = pad .. logo .. "\n"
+		opts.config.header = vim.split(logo, "\n")
 
 		for _, button in ipairs(opts.config.center) do
 			button.desc = button.desc .. string.rep(" ", 43 - #button.desc)
