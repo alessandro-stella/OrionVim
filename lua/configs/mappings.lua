@@ -9,6 +9,9 @@ map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", { silent = true })
 -- CTRL+F search
 map("n", "<C-f>", "/", { noremap = true })
 
+-- CTRL+A select all
+map("n", "<C-a>", "ggVG", { noremap = true })
+
 -- TAB next buffer
 map("n", "<Tab>", "<cmd>bnext<CR>", { silent = true })
 

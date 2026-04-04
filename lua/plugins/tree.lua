@@ -19,6 +19,11 @@ return {
 		view = {
 			side = "right",
 		},
+		update_focused_file = {
+			enable = true,
+		},
+		sync_root_with_cwd = true,
+		respect_buf_cwd = true,
 		on_attach = function(bufnr)
 			local api = require("nvim-tree.api")
 
