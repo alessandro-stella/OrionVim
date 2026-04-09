@@ -33,7 +33,7 @@ return {
 					"jsonls",
 					"tailwindcss",
 					"jdtls",
-					"emmet_language_server",
+					"html",
 					"prettierd",
 				},
 				automatic_installation = true,

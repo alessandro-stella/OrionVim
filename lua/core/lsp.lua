@@ -1,7 +1,21 @@
+-- Use custom jdtls setup
 vim.lsp.config("jdtls", {
 	autostart = false,
 })
 
+-- Disable duplicate messages from vtsls and eslint
+vim.lsp.config("vtsls", {
+	settings = {
+		typescript = {
+			validate = false,
+		},
+		javascript = {
+			validate = false,
+		},
+	},
+})
+
+-- Custom diagnostics
 vim.diagnostic.config({
 	virtual_text = true,
 	underline = true,
