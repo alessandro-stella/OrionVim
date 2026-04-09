@@ -14,6 +14,7 @@ return {
 					if vim.bo.filetype == "sagarename" then
 						return false
 					end
+
 					return true
 				end,
 				signature = {

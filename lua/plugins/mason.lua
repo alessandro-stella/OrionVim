@@ -30,10 +30,11 @@ return {
 					"lua_ls",
 					"cssls",
 					"eslint",
-					"html",
 					"jsonls",
 					"tailwindcss",
 					"jdtls",
+					"emmet_language_server",
+					"prettierd",
 				},
 				automatic_installation = true,
 				automatic_enable = {
