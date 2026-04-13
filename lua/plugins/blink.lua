@@ -10,12 +10,16 @@ return {
 		config = function()
 			require("blink.cmp").setup({
 				enabled = function()
-					-- Disable for Lspsaga rename
-					if vim.bo.filetype == "sagarename" then
-						return false
-					end
+					-- Disable autocompletion for these filetypes
+					local disable_filetypes = {
+						sagarename = true,
+						prolog = true,
+						text = true,
+						conf = true,
+						markdown = true,
+					}
 
-					return true
+					return not disable_filetypes[vim.bo.filetype]
 				end,
 				signature = {
 					enabled = true,
