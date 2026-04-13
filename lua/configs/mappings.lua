@@ -18,9 +18,6 @@ map("n", "<Tab>", "<cmd>bnext<CR>", { silent = true })
 -- SHIFT+TAB previous buffer
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { silent = true })
 
--- Open side bar
-map("n", "<C-n>", "", { noremap = true })
-
 -- Minor tweak for missclick
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
@@ -57,13 +54,6 @@ map("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- Rename variable/function (uses LSP)
 map("n", "<leader>ra", "<cmd>Lspsaga rename<CR>", { desc = "Rename variable" })
-
--- Remap copy and paste to use global clipboard
-map("n", "y", '"+y')
-map("n", "yy", '"+yy')
-map("n", "Y", '"+Y')
-map("x", "y", '"+y')
-map("x", "Y", '"+Y')
 
 -- Remove search highlighting
 map("n", "<Esc>", ":nohlsearch<CR><Esc>", { noremap = true, silent = true })

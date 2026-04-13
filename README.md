@@ -38,5 +38,6 @@ Comes preinstalled with a wide compatibility with most modern programming langua
 | Copy to end of line | <kbd>Y</kbd> | Normal |
 | Exit terminal mode | <kbd>Esc</kbd> + <kbd>Esc</kbd> | Terminal |
 | Close buffer | <kbd>Leader</kbd> + <kbd>X</kbd> | Normal |
+| Select all | <kbd>Ctrl</kbd> + <kbd>A</kbd> | Normal|
 | Vertical split (≥2 buffers) | <kbd>Leader</kbd> + <kbd>V</kbd> | Normal |
 | Horizontal split (≥2 buffers) | <kbd>Leader</kbd> + <kbd>H</kbd> | Normal |
