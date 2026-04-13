@@ -34,7 +34,6 @@ return {
 					"tailwindcss",
 					"jdtls",
 					"html",
-					"prettierd",
 				},
 				automatic_installation = true,
 				automatic_enable = {
@@ -57,6 +56,7 @@ return {
 					"shfmt",
 					"solang",
 					"stylua",
+					"prettierd",
 				},
 				auto_update = true,
 				run_on_start = true,
