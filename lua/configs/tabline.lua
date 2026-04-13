@@ -128,9 +128,11 @@ vim.api.nvim_set_hl(0, "TabSeparatorSel", { fg = colors.not_selected, underline 
 -- Create selected icons style
 local has_devicons, devicons = pcall(require, "nvim-web-devicons")
 if has_devicons then
+	devicons.setup()
+
 	for _, data in pairs(devicons.get_icons()) do
 		local hl = "DevIcon" .. data.name
-		local hl_data = vim.api.nvim_get_hl(0, { name = hl })
+		local hl_data = vim.api.nvim_get_hl(0, { name = hl, link = false })
 
 		if hl_data and hl_data.fg then
 			vim.api.nvim_set_hl(0, hl .. "Selected", {
