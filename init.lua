@@ -10,3 +10,10 @@ require("configs.tabline")
 
 require("configs.highlights").setup()
 require("configs.dynamic_borders").setup()
+
+-- Prolog setup
+vim.filetype.add({
+	pattern = {
+		[".*/prolog/.*%.pl"] = "prolog",
+	},
+})
