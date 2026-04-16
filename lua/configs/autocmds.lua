@@ -2,6 +2,7 @@
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "java",
 	callback = function(_)
+		vim.notify("Starting JDTLS...", vim.log.levels.INFO)
 		require("configs.jdtls_setup"):setup()
 	end,
 })

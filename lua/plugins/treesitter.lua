@@ -34,7 +34,17 @@ return {
 		require("nvim-treesitter").install(parsersToInstall)
 
 		vim.api.nvim_create_autocmd("FileType", {
-			callback = function()
+			callback = function(args)
+				local ft = vim.bo[args.buf].filetype
+
+				local excluded = {
+					html = true,
+				}
+
+				if excluded[ft] then
+					return
+				end
+
 				-- Enable treesitter highlighting and disable regex syntax
 				pcall(vim.treesitter.start)
 				-- Enable treesitter-based indentation

@@ -59,6 +59,12 @@ function M:setup()
 		init_options = {
 			bundles = {},
 		},
+
+		on_attach = function(client, _)
+			if client.name == "jdtls" then
+				client.server_capabilities.semanticTokensProvider = nil
+			end
+		end,
 	}
 
 	-- Start a new client & server, or attach to an existing one based on root_dir
