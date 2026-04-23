@@ -3,71 +3,81 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	event = "VeryLazy",
 	config = function()
-		local function get_permissions()
-			local file = vim.fn.expand("%:p")
-			if file == "" or file == nil then
-				return ""
-			end
-			local permissions = vim.fn.getfperm(file)
-			return permissions ~= "" and permissions or ""
-		end
-
-		local function get_lsp_name()
-			local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
-			if #buf_clients == 0 then
-				return "No LSP"
-			end
-
-			local client_names = {}
-			for _, client in ipairs(buf_clients) do
-				table.insert(client_names, client.name)
-			end
-
-			return "  " .. table.concat(client_names, ", ")
-		end
-
-		local function custom_filename()
-			local full_name = vim.fn.expand("%:t")
-			if full_name == "" then
+		local function filename_with_icon()
+			local name = vim.fn.expand("%:t")
+			if name == "" then
 				return "[No Name]"
 			end
 
-			local max_len = 30
-			if #full_name > max_len then
-				local extension = vim.fn.fnamemodify(full_name, ":e")
-				local stem = vim.fn.fnamemodify(full_name, ":r")
-
-				if extension ~= "" then
-					local allowed_stem_len = max_len - #extension - 2
-					if allowed_stem_len > 0 then
-						return string.sub(stem, 1, allowed_stem_len) .. "…" .. "." .. extension
-					end
-				end
-
-				return string.sub(full_name, 1, max_len - 1) .. "…"
+			local icon = ""
+			local ok, devicons = pcall(require, "nvim-web-devicons")
+			if ok then
+				icon = devicons.get_icon(name, nil, { default = true }) or ""
 			end
-			return full_name
+
+			return icon .. " " .. name
 		end
 
 		require("lualine").setup({
 			options = {
-				theme = "auto",
+				theme = "onedark",
 				globalstatus = true,
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
+				component_separators = { left = "╱", right = "" },
+				section_separators = { left = "", right = "" },
 			},
+
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = {
+					function()
+						local mode_map = {
+							n = "NORMAL",
+							i = "INSERT",
+							v = "VISUAL",
+							V = "V-LINE",
+							["\22"] = "V-BLOCK",
+							c = "COMMAND",
+							R = "REPLACE",
+							t = "TERMINAL",
+						}
+						local mode = vim.api.nvim_get_mode().mode
+						return " " .. (mode_map[mode] or mode)
+					end,
+				},
 				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = {
-					{ custom_filename, file_status = true, icons_enabled = true },
-					{ get_permissions, color = { fg = "#a6adc8" } },
-				},
+				lualine_c = { filename_with_icon },
+
 				lualine_x = {
-					{ get_lsp_name, color = { fg = "#fab387", gui = "bold" } },
-					"filetype",
+					{
+						function()
+							local c = vim.lsp.get_clients({ bufnr = 0 })
+							if #c == 0 then
+								return "No LSP"
+							end
+							local t = {}
+							for i = 1, #c do
+								t[i] = c[i].name
+							end
+							return "  " .. table.concat(t, ", ")
+						end,
+						color = { fg = "#fab387", gui = "bold" },
+					},
 				},
-				lualine_z = { "location" },
+
+				lualine_y = {
+					{
+						function()
+							local dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+							return " " .. dir
+						end,
+						color = { bg = "#3e4452", fg = "#abb2bf" },
+					},
+				},
+
+				lualine_z = {
+					function()
+						return vim.fn.line(".") .. ":" .. vim.fn.col(".")
+					end,
+				},
 			},
 		})
 	end,
