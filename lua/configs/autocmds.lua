@@ -1,12 +1,3 @@
--- Configure jdtls for java projects
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = function(_)
-		vim.notify("Starting JDTLS...", vim.log.levels.INFO)
-		require("configs.jdtls_setup"):setup()
-	end,
-})
-
 -- Change tab from spaces to actual tab for text files
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "text", "conf", "markdown", "" },
