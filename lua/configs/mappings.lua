@@ -136,3 +136,38 @@ vim.keymap.set("n", "<leader>h", function()
 
 	vim.cmd("split")
 end, { noremap = true, silent = true, desc = "Split window horizontally" })
+
+local function search_and_replace_normal()
+	vim.ui.input({ prompt = "Replace (regex): " }, function(from)
+		if not from or from == "" then
+			return
+		end
+
+		vim.fn.setreg("/", from)
+		vim.opt.hlsearch = true
+		vim.cmd("redraw")
+
+		vim.ui.input({ prompt = "With: " }, function(to)
+			if not to then
+				return
+			end
+
+			vim.ui.input({ prompt = "Flag (default g): ", default = "g" }, function(flags)
+				if not flags then
+					flags = "g"
+				end
+
+				local cmd = string.format("%%s/%s/%s/%s", from:gsub("/", "\\/"), to:gsub("/", "\\/"), flags)
+
+				local status, err = pcall(vim.cmd, cmd)
+				if not status then
+					vim.notify("Error during command: " .. err, vim.log.levels.ERROR)
+				end
+
+				vim.cmd("nohlsearch")
+			end)
+		end)
+	end)
+end
+
+vim.keymap.set("n", "<leader>fr", search_and_replace_normal, { desc = "Search and replace" })
