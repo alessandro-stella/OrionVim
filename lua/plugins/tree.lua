@@ -33,6 +33,7 @@ return {
 		},
 		renderer = {
 			root_folder_label = false,
+			symlink_destination = false,
 			indent_markers = {
 				enable = true,
 			},
