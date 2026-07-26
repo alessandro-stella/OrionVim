@@ -15,6 +15,15 @@ vim.lsp.config("vtsls", {
 	},
 })
 
+-- Fix for header path on NixOS
+vim.lsp.config("clangd", {
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--query-driver=/run/current-system/sw/bin/gcc,/run/current-system/sw/bin/clang,/nix/store/*/bin/*gcc*,/nix/store/*/bin/*clang*",
+	},
+})
+
 -- Custom diagnostics
 vim.diagnostic.config({
 	virtual_text = true,
