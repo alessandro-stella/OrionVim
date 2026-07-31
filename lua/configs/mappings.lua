@@ -58,6 +58,9 @@ map("n", "<leader>ra", "<cmd>Lspsaga rename<CR>", { desc = "Rename variable" })
 -- Remove search highlighting
 map("n", "<Esc>", ":nohlsearch<CR><Esc>", { noremap = true, silent = true })
 
+-- Remap CTRL + SHIFT + Z to "redo" for too many "undo"
+vim.keymap.set("n", "<C-S-z>", "<C-r>", { desc = "Redo" })
+
 -- ================================================
 -- =============  Close buffer logic  =============
 -- ================================================
