@@ -66,3 +66,7 @@ opt.scrolloff = 5
 
 -- Use system clipboard
 opt.clipboard = "unnamedplus"
+
+-- Set persistent undo for files
+opt.undofile = true
+opt.undodir = vim.fn.stdpath("state") .. "/undo"
