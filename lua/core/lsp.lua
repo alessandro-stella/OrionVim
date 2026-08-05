@@ -7,28 +7,22 @@ vim.lsp.config("jdtls", {
 -- and enable autocompletion
 vim.lsp.config("vtsls", {
 	settings = {
+		vtsls = {
+			autoUseWorkspaceTsdk = true,
+			enableMoveToFileCodeAction = true,
+		},
 		javascript = {
 			validate = false,
-			suggest = {
-				autoImports = true,
-				includeAutomaticOptionalChainCompletions = true,
-			},
-			typescript = {
-				preferences = {
-					includePackageJsonAutoImports = "on",
-					importModuleSpecifierPreference = "shortest",
-				},
+			preferences = {
+				includePackageJsonAutoImports = "on",
+				importModuleSpecifierPreference = "relative",
 			},
 		},
 		typescript = {
 			validate = false,
-			suggest = {
-				autoImports = true,
-				includeAutomaticOptionalChainCompletions = true,
-			},
 			preferences = {
 				includePackageJsonAutoImports = "on",
-				importModuleSpecifierPreference = "shortest",
+				importModuleSpecifierPreference = "relative",
 			},
 		},
 	},
