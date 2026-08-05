@@ -18,10 +18,12 @@ return {
 			},
 		},
 		extensions = {
-			"fzf",
+			fzf = {},
 		},
 	},
-	config = function()
-		require("telescope").load_extension("fzf")
+	config = function(_, opts)
+		local telescope = require("telescope")
+		telescope.setup(opts)
+		telescope.load_extension("fzf")
 	end,
 }
