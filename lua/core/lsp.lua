@@ -4,13 +4,32 @@ vim.lsp.config("jdtls", {
 })
 
 -- Disable duplicate messages from vtsls and eslint
+-- and enable autocompletion
 vim.lsp.config("vtsls", {
 	settings = {
-		typescript = {
-			validate = false,
-		},
 		javascript = {
 			validate = false,
+			suggest = {
+				autoImports = true,
+				includeAutomaticOptionalChainCompletions = true,
+			},
+			typescript = {
+				preferences = {
+					includePackageJsonAutoImports = "on",
+					importModuleSpecifierPreference = "shortest",
+				},
+			},
+		},
+		typescript = {
+			validate = false,
+			suggest = {
+				autoImports = true,
+				includeAutomaticOptionalChainCompletions = true,
+			},
+			preferences = {
+				includePackageJsonAutoImports = "on",
+				importModuleSpecifierPreference = "shortest",
+			},
 		},
 	},
 })

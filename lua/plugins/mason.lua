@@ -34,6 +34,7 @@ return {
 					"tailwindcss",
 					"jdtls",
 					"html",
+					"emmet_language_server",
 				},
 				automatic_installation = true,
 				automatic_enable = {
