@@ -3,11 +3,31 @@ vim.lsp.config("jdtls", {
 	autostart = false,
 })
 
--- Disable duplicate messages from vtsls and eslint
--- and enable autocompletion
+-- Javascript diagnostics
 vim.diagnostic.config({
 	severity_sort = true,
 })
+
+local default_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+	if result and result.diagnostics then
+		local client = vim.lsp.get_client_by_id(ctx.client_id)
+
+		if client and client.name == "vtsls" then
+			local bufnr = vim.uri_to_bufnr(result.uri)
+			local filetype = vim.bo[bufnr].filetype
+
+			if filetype == "javascript" or filetype == "javascriptreact" then
+				result.diagnostics = vim.tbl_filter(function(diagnostic)
+					return diagnostic.code ~= 80001 and diagnostic.code ~= 7044
+				end, result.diagnostics)
+			end
+		end
+	end
+
+	default_publish_diagnostics(err, result, ctx, config)
+end
 
 vim.lsp.config("vtsls", {
 	settings = {
