@@ -29,7 +29,6 @@ return {
 					"vtsls",
 					"lua_ls",
 					"cssls",
-					"eslint",
 					"jsonls",
 					"tailwindcss",
 					"jdtls",
