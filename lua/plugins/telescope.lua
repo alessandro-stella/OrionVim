@@ -17,6 +17,16 @@ return {
 				},
 			},
 		},
+		pickers = {
+			find_files = {
+				follow = true,
+			},
+			live_grep = {
+				additional_args = function()
+					return { "--follow" }
+				end,
+			},
+		},
 		extensions = {
 			fzf = {},
 		},
