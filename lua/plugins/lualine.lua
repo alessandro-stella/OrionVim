@@ -71,6 +71,16 @@ return {
 						end,
 						color = { bg = "#3e4452", fg = "#abb2bf" },
 					},
+
+					{
+						function()
+							return vim.env.TMUX and "TMUX" or ""
+						end,
+						color = { bg = "#698dda", fg = "#212023", gui = "bold" },
+						separator = {
+							left = "",
+						},
+					},
 				},
 
 				lualine_z = {
