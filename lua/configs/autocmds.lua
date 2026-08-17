@@ -9,6 +9,23 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
+-- Tmux integration
+vim.api.nvim_create_autocmd("VimSuspend", {
+	callback = function()
+		if vim.env.TMUX then
+			os.execute("tmux set status on")
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("VimResume", {
+	callback = function()
+		if vim.env.TMUX then
+			os.execute("tmux set status off")
+		end
+	end,
+})
+
 -- Setup after LSP loading
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
