@@ -10,19 +10,30 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Tmux integration
+local function tmux_check_and_set(show)
+	if not vim.env.TMUX then
+		return
+	end
+
+	local status = show and "on" or "off"
+	os.execute("tmux set status " .. status)
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		tmux_check_and_set(false)
+	end,
+})
+
 vim.api.nvim_create_autocmd("VimSuspend", {
 	callback = function()
-		if vim.env.TMUX then
-			os.execute("tmux set status on")
-		end
+		tmux_check_and_set(true)
 	end,
 })
 
 vim.api.nvim_create_autocmd("VimResume", {
 	callback = function()
-		if vim.env.TMUX then
-			os.execute("tmux set status off")
-		end
+		tmux_check_and_set(false)
 	end,
 })
 
