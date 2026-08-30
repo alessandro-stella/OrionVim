@@ -1,7 +1,7 @@
 local M = {}
 
 local function get_hypr_border_color()
-	local path = os.getenv("HOME") .. "/.config/hypr/dynamic-border.conf"
+	local path = os.getenv("HOME") .. "/.config/hypr/modules/dynamic-border.lua"
 	local file = io.open(path, "r")
 	if not file then
 		return nil
