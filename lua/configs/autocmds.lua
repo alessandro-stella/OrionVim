@@ -37,6 +37,12 @@ vim.api.nvim_create_autocmd("VimResume", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("VimLeave", {
+	callback = function()
+		tmux_check_and_set(true)
+	end,
+})
+
 -- Setup after LSP loading
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
