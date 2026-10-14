@@ -59,7 +59,11 @@ vim.lsp.config("clangd", {
 
 -- Custom diagnostics
 vim.diagnostic.config({
-	virtual_text = true,
+	virtual_text = {
+		format = function(d)
+			return d.message:match("^[^\n]*")
+		end,
+	},
 	underline = true,
 	update_in_insert = false,
 	severity_sort = true,
