@@ -22,7 +22,13 @@ map("n", "<S-Tab>", "<cmd>bprevious<CR>", { silent = true })
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
 -- Code Actions
-map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+map({ "n", "v" }, "<leader>ca", function()
+	vim.lsp.buf.code_action({
+		filter = function(action)
+			return not action.disabled
+		end,
+	})
+end, { desc = "Code Action" })
 
 -- Easy exit from terminal mode
 map("t", "<esc><esc>", "<c-\\><c-n>")

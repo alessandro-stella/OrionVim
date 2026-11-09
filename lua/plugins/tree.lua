@@ -42,6 +42,12 @@ return {
 				show = {
 					git = true,
 				},
+				glyphs = {
+					folder = {
+						arrow_closed = "󰅂",
+						arrow_open = "󰅀",
+					},
+				},
 			},
 		},
 		view = {
