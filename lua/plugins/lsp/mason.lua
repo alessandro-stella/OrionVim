@@ -5,15 +5,10 @@ return {
 		opts = {
 			ui = {
 				border = "rounded",
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
+				icons = { package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" },
 			},
 		},
 	},
-
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
@@ -50,14 +45,7 @@ return {
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-tool-installer").setup({
-				ensure_installed = {
-					"codelldb",
-					"shellcheck",
-					"shfmt",
-					"solang",
-					"stylua",
-					"prettierd",
-				},
+				ensure_installed = { "codelldb", "shellcheck", "shfmt", "solang", "stylua", "prettierd" },
 				auto_update = true,
 				run_on_start = true,
 				start_delay = 1000,

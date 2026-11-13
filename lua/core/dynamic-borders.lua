@@ -32,10 +32,11 @@ function M.setup()
 		"TelescopeResultsBorder",
 		"SagaTitle",
 		"WinSeparator",
-		"DashboardHeader",
+		"GreeterLogo",
 		"BlinkCmpDocBorder",
 		"BlinkCmpMenuBorder",
 		"BlinkCmpSignatureHelpBorder",
+		"MiniIndentscopeSymbol",
 	}
 
 	local background = {

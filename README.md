@@ -1,14 +1,7 @@
 # OrionVim
 
-<img src="https://github.com/user-attachments/assets/c6251e26-031b-44ab-8ca3-cc2a0e7a04c1" alt="Dashboard">
-
 Custom neovim configuration aimed to semplicity and ease of use.
 Comes preinstalled with a wide compatibility with most modern programming languages.
-
-## Overview
-<img src="https://github.com/user-attachments/assets/989edf7a-e734-4e1f-938e-2b758a3e07bc" alt="Files" width="32.5%">
-<img src="https://github.com/user-attachments/assets/087949e1-97db-4a56-973b-7bd836e5b5a5" alt="Lazy" width="32.5%">
-<img src="https://github.com/user-attachments/assets/a8237e7a-155d-4600-8c8f-99ab6e1f8782" alt="Mason" width="32.5%">
 
 ## Keymaps
 | Description | Command | Mode |

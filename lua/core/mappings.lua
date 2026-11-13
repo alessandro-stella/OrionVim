@@ -1,5 +1,36 @@
 local map = vim.keymap.set
 
+-- Safely close buffer
+vim.keymap.set("n", "<leader>x", function()
+	local greeter = require("core.greeter")
+	local buf = vim.api.nvim_get_current_buf()
+	local ft = vim.bo[buf].filetype
+	if ft == "NvimTree" or ft == "dashboard" then
+		return
+	end
+
+	if not greeter.delete_buf(buf) then
+		return -- annullato
+	end
+
+	if #vim.fn.getbufinfo({ buflisted = 1 }) == 0 then
+		pcall(vim.cmd, "only")
+		return
+	end
+
+	local count = 0
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local b = vim.api.nvim_win_get_buf(win)
+		if vim.bo[b].buftype == "" and vim.bo[b].filetype ~= "NvimTree" then
+			count = count + 1
+			if count ~= 1 then
+				vim.cmd("q")
+				return
+			end
+		end
+	end
+end, { noremap = true, silent = true, desc = "Close buffer" })
+
 -- Replace default paste behavior to avoit copying text overwritten by a paste
 map("x", "p", [["_dP]])
 
@@ -33,13 +64,6 @@ end, { desc = "Code Action" })
 -- Easy exit from terminal mode
 map("t", "<esc><esc>", "<c-\\><c-n>")
 
--- Mappings for telescope
-local builtin = require("telescope.builtin")
-
-map("n", "<leader>fo", builtin.oldfiles, { desc = "Telescope: Recent files" })
-map("n", "<leader>ff", builtin.find_files, { desc = "Telescope: Find files" })
-map("n", "<leader>fw", builtin.live_grep, { desc = "Telescope: Live grep" })
-
 -- Move through windows
 map("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 map("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
@@ -58,6 +82,21 @@ map("v", "<leader>/", "gc", { remap = true, desc = "Comment selection" })
 -- Go to definition
 map("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
+-- Go to references
+map("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
+
+-- Go to implementation
+map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+
+-- Navigate diagnostics (errors/warnings)
+map("n", "[d", function()
+	vim.diagnostic.jump({ count = -1 })
+end, { desc = "Go to previous diagnostic message" })
+map("n", "]d", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to next diagnostic message" })
+map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic error messages" })
+
 -- Rename variable/function (uses LSP)
 map("n", "<leader>ra", "<cmd>Lspsaga rename<CR>", { desc = "Rename variable" })
 
@@ -67,9 +106,24 @@ map("n", "<Esc>", ":nohlsearch<CR><Esc>", { noremap = true, silent = true })
 -- Remap CTRL + SHIFT + Z to "redo" for too many "undo"
 vim.keymap.set("n", "<C-S-z>", "<C-r>", { desc = "Redo" })
 
--- ================================================
--- =============  Close buffer logic  =============
--- ================================================
+-- Keep visual mode selection after indenting
+map("v", "<", "<gv", { desc = "Indent left and re-select" })
+map("v", ">", ">gv", { desc = "Indent right and re-select" })
+
+-- Move selected lines up and down in visual mode
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
+
+-- Keep cursor in place when joining lines (J in normal mode)
+map("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
+
+-- Center the cursor on screen while jumping through search results
+map("n", "n", "nzzzv", { desc = "Next search result" })
+map("n", "N", "Nzzzv", { desc = "Previous search result" })
+
+-- Center the cursor when paging up and down
+map("n", "<C-d>", "<C-d>zz", { desc = "Page down" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Page up" })
 
 -- Helper: count listed normal buffers (excluding nvim-tree)
 local function count_buffers()
@@ -82,41 +136,6 @@ local function count_buffers()
 
 	return count
 end
-
--- Close buffer and window
-vim.keymap.set("n", "<leader>x", function()
-	local curr_buf = vim.api.nvim_get_current_buf()
-	if vim.bo[curr_buf].filetype == "NvimTree" then
-		return
-	end
-
-	local open_buffers = count_buffers()
-
-	vim.cmd("Bdelete")
-
-	if open_buffers == 1 then
-		vim.cmd("only")
-		vim.cmd("Dashboard")
-	else
-		local wins = vim.api.nvim_list_wins()
-		local count = 0
-
-		for _, win in ipairs(wins) do
-			local buf = vim.api.nvim_win_get_buf(win)
-			local ft = vim.bo[buf].filetype
-			local bt = vim.bo[buf].buftype
-
-			if bt == "" and ft ~= "NvimTree" then
-				count = count + 1
-
-				if count ~= 1 then
-					vim.cmd("q")
-					return
-				end
-			end
-		end
-	end
-end, { noremap = true, silent = true, desc = "Close buffer" })
 
 -- Vertical split if at least 2 normal buffers
 vim.keymap.set("n", "<leader>v", function()
