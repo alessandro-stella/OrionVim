@@ -24,7 +24,7 @@ return {
 
 				local background = props.focused and "#3e4452" or "#21252b"
 				local fg_icon = props.focused and color or "#3e4452"
-				local edit_icon = props.focused and "#e5c07b" or "#3e4452"
+				local edit_icon = props.focused and "#98c379" or "#3e4452"
 
 				return {
 					{ " ", guifg = background },
