@@ -50,6 +50,19 @@ return {
 			},
 		})
 
+		-- Nix LSP
+		vim.lsp.config("nil_ls", {
+			settings = {
+				["nil"] = {
+					nix = {
+						flake = {
+							autoArchive = true,
+						},
+					},
+				},
+			},
+		})
+
 		-- Change diagnostic's graphic
 		vim.diagnostic.config({
 			virtual_text = {
