@@ -29,6 +29,7 @@ return {
 					"jdtls",
 					"html",
 					"emmet_language_server",
+					"nil_ls",
 				},
 				automatic_installation = true,
 				automatic_enable = {
@@ -45,7 +46,7 @@ return {
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-tool-installer").setup({
-				ensure_installed = { "codelldb", "shellcheck", "shfmt", "solang", "stylua", "prettierd" },
+				ensure_installed = { "codelldb", "shellcheck", "shfmt", "solang", "stylua", "prettierd", "nixfmt" },
 				auto_update = true,
 				run_on_start = true,
 				start_delay = 1000,

@@ -5,30 +5,28 @@ return {
 		local vtsls_ignored_codes = { [6133] = true, [6192] = true, [6196] = true, [6198] = true }
 		local vtsls_ignored_js_codes = { [80001] = true, [7044] = true }
 
-		local default_publish_diagnostics = function(err, result, ctx, config)
-			if result and result.diagnostics then
-				local client = vim.lsp.get_client_by_id(ctx.client_id)
-				if client and client.name == "vtsls" then
-					local bufnr = vim.uri_to_bufnr(result.uri)
-					local filetype = vim.bo[bufnr].filetype
-					local is_js = filetype == "javascript" or filetype == "javascriptreact"
-
-					result.diagnostics = vim.tbl_filter(function(diagnostic)
-						if vtsls_ignored_codes[diagnostic.code] then
-							return false
-						end
-						if is_js and vtsls_ignored_js_codes[diagnostic.code] then
-							return false
-						end
-						return true
-					end, result.diagnostics)
-				end
-			end
-
-			default_publish_diagnostics(err, result, ctx, config)
-		end
-
 		vim.lsp.config("vtsls", {
+			handlers = {
+				["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+					if result and result.diagnostics then
+						local bufnr = vim.uri_to_bufnr(result.uri)
+						local filetype = vim.bo[bufnr].filetype
+						local is_js = filetype == "javascript" or filetype == "javascriptreact"
+
+						result.diagnostics = vim.tbl_filter(function(diagnostic)
+							if vtsls_ignored_codes[diagnostic.code] then
+								return false
+							end
+							if is_js and vtsls_ignored_js_codes[diagnostic.code] then
+								return false
+							end
+							return true
+						end, result.diagnostics)
+					end
+
+					return vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+				end,
+			},
 			settings = {
 				javascript = {
 					validate = true,
